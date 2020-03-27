@@ -134,6 +134,9 @@ module ActivityNotification
           if options.has_key?(:custom_filter)
             filtered_notifications = filtered_notifications.where(options[:custom_filter])
           end
+          if options.has_key?(:limit)
+            filtered_notifications = filtered_notifications.limit(options[:limit])
+          end
           filtered_notifications
         }
 
