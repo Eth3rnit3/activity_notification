@@ -418,9 +418,10 @@ module ActivityNotification
       def open_all_of(target, options = {})
         opened_at = options[:opened_at] || Time.current
         target_unopened_notifications = target.notifications.unopened_only.filtered_by_options(options)
-        opened_notifications = target_unopened_notifications.to_a.map { |n| n.opened_at = opened_at; n }
-        target_unopened_notifications.update_all(opened_at: opened_at)
-        opened_notifications
+        target_unopened_notifications.to_a.map do |n|
+          n.update(opened_at: opened_at)
+          n
+        end
       end
 
       # Returns if group member of the notifications exists.
